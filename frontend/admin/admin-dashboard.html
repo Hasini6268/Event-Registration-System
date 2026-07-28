@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="admin-style.css">
+
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <h1>Welcome Admin</h1>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+        <hr>
+
+        <h2>Add New Event</h2>
+
+        <input
+            type="text"
+            id="eventTitle"
+            placeholder="Event Title"
+        >
+
+        <br><br>
+
+        <textarea
+            id="eventDescription"
+            placeholder="Event Description"
+        ></textarea>
+
+        <br><br>
+
+        <input
+            type="date"
+            id="eventDate"
+        >
+
+        <br><br>
+
+        <input
+            type="time"
+            id="eventTime"
+        >
+
+        <br><br>
+
+        <input
+            type="text"
+            id="eventVenue"
+            placeholder="Event Venue"
+        >
+
+        <br><br>
+
+        <input
+            type="number"
+            id="maxParticipants"
+            placeholder="Maximum Participants"
+        >
+
+        <br><br>
+
+        <button onclick="addEvent()">
+            Create Event
+        </button>
+
+        <p id="eventMessage"></p>
+
+        <hr>
+
+        <h2>Manage Events</h2>
+
+        <button onclick="viewEvents()">
+            Refresh Events
+        </button>
+
+        <br><br>
+
+        <div id="eventList">
+
+            <!-- Events will appear here -->
+
+        </div>
+
+        <hr>
+
+        <h2>Registrations</h2>
+
+        <button onclick="viewRegistrations()">
+            View Registrations
+        </button>
+
+        <br><br>
+
+        <div id="registrationsContainer">
+
+            <!-- Registrations will appear here -->
+
+        </div>
+
+    </div>
+
+    <script src="admin-dashboard.js"></script>
+
+</body>
+
+</html>

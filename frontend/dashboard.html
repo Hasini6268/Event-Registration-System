@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | EventSphere</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- ========================= -->
+    <!-- Navigation -->
+    <!-- ========================= -->
+
+    <nav>
+
+        <div class="logo">
+            EventSphere
+        </div>
+
+        <ul>
+
+            <li><a href="index.html">Home</a></li>
+
+            <li><a href="events.html">Events</a></li>
+
+            <li><a href="myRegistrations.html">My Registrations</a></li>
+
+            <li><a href="dashboard.html">Dashboard</a></li>
+
+            <li><a href="#" id="logoutBtn">Logout</a></li>
+
+        </ul>
+
+    </nav>
+
+    <!-- ========================= -->
+    <!-- Dashboard Banner -->
+    <!-- ========================= -->
+
+    <section class="hero" style="min-height:40vh;padding:70px 20px;">
+
+        <div class="hero-content">
+
+            <h1 id="welcomeMessage">
+                Welcome
+            </h1>
+
+            <p>
+
+                Manage your event registrations, explore upcoming events,
+                and keep track of your participation from one place.
+
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- Statistics -->
+    <!-- ========================= -->
+
+    <section class="dashboard">
+
+        <div class="dashboard-cards">
+
+            <div class="dashboard-card">
+
+                <div style="font-size:55px;">📅</div>
+
+                <h2>Total Events</h2>
+
+                <h1 id="totalEvents">0</h1>
+
+            </div>
+
+            <div class="dashboard-card">
+
+                <div style="font-size:55px;">🎟️</div>
+
+                <h2>My Registrations</h2>
+
+                <h1 id="myRegistrations">0</h1>
+
+            </div>
+
+            <div class="dashboard-card">
+
+                <div style="font-size:55px;">❌</div>
+
+                <h2>Cancelled</h2>
+
+                <h1 id="cancelledRegistrations">0</h1>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- Quick Actions -->
+    <!-- ========================= -->
+
+    <section class="container" style="margin-bottom:60px;">
+
+        <h2 class="section-title">
+
+            Quick Actions
+
+        </h2>
+
+        <div class="dashboard-buttons">
+
+            <button onclick="location.href='events.html'">
+
+                📅 Browse Events
+
+            </button>
+
+            <button onclick="location.href='myRegistrations.html'">
+
+                🎫 My Registrations
+
+            </button>
+
+            <button onclick="location.href='register.html'">
+
+                👤 Create Account
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- Information Cards -->
+    <!-- ========================= -->
+
+    <section class="features">
+
+        <div class="feature-container">
+
+            <div class="card">
+
+                <h2>🚀 Discover Events</h2>
+
+                <p>
+
+                    Browse technical, cultural, sports and workshop events
+                    happening across the platform.
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h2>🔔 Stay Updated</h2>
+
+                <p>
+
+                    Keep track of your upcoming registrations and never miss
+                    an important event.
+
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <h2>🛡 Secure Access</h2>
+
+                <p>
+
+                    Your account is protected using secure JWT authentication.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- Footer -->
+    <!-- ========================= -->
+
+    <footer>
+
+        <p>
+
+            © 2026 EventSphere | Event Registration & Management System
+
+        </p>
+
+        <p>
+
+            Developed using HTML, CSS, JavaScript, Node.js, Express.js & MongoDB
+
+        </p>
+
+    </footer>
+
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

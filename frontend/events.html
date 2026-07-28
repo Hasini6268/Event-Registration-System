@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Events | EventSphere</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- ===================== -->
+    <!-- Navigation -->
+    <!-- ===================== -->
+
+    <nav>
+
+        <div class="logo">
+            EventSphere
+        </div>
+
+        <ul>
+
+            <li><a href="index.html">Home</a></li>
+
+            <li><a href="events.html">Events</a></li>
+
+            <li><a href="myRegistrations.html">My Registrations</a></li>
+
+            <li><a href="dashboard.html">Dashboard</a></li>
+
+            <li><a href="#" id="logoutBtn">Logout</a></li>
+
+        </ul>
+
+    </nav>
+
+    <!-- ===================== -->
+    <!-- Page Banner -->
+    <!-- ===================== -->
+
+    <section class="hero" style="min-height:45vh; padding:70px 20px;">
+
+        <div class="hero-content">
+
+            <h1>Explore Upcoming Events</h1>
+
+            <p>
+
+                Discover technical, cultural, sports, workshops and seminar
+                events. Register instantly and reserve your seat before it's full.
+
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- ===================== -->
+    <!-- Search Area -->
+    <!-- ===================== -->
+
+    <section class="container" style="margin-top:50px;">
+
+        <div style="
+            display:flex;
+            gap:20px;
+            flex-wrap:wrap;
+            justify-content:center;
+            align-items:center;
+        ">
+
+            <input
+                type="text"
+                placeholder="Search events..."
+                style="
+                width:320px;
+                padding:14px;
+                border-radius:10px;
+                border:1px solid #d1d5db;
+                font-size:16px;
+                ">
+
+            <select
+                style="
+                padding:14px;
+                border-radius:10px;
+                border:1px solid #d1d5db;
+                font-size:16px;
+                ">
+
+                <option>All Categories</option>
+                <option>Technical</option>
+                <option>Cultural</option>
+                <option>Sports</option>
+                <option>Workshop</option>
+                <option>Seminar</option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+    <!-- ===================== -->
+    <!-- Events -->
+    <!-- ===================== -->
+
+    <section class="event-section">
+
+        <h1 class="page-title">
+
+            Featured Events
+
+        </h1>
+
+        <div id="eventsContainer" class="event-container">
+
+            <p class="loading">
+
+                Loading events...
+
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- ===================== -->
+    <!-- Footer -->
+    <!-- ===================== -->
+
+    <footer>
+
+        <p>
+
+            © 2026 EventSphere | Event Registration & Management System
+
+        </p>
+
+        <p>
+
+            Built using HTML, CSS, JavaScript, Node.js, Express.js & MongoDB
+
+        </p>
+
+    </footer>
+
+    <!-- JavaScript -->
+
+    <script src="js/events.js"></script>
+
+</body>
+
+</html>
