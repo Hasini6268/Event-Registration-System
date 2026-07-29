@@ -7,6 +7,7 @@ const API_URL = "https://event-registration-system-1-yze2.onrender.com/api/regis
 
 async function loadRegistrations() {
 
+
     const token = localStorage.getItem("token");
 
 
@@ -21,35 +22,73 @@ async function loadRegistrations() {
     }
 
 
+
+    const container =
+        document.getElementById("registrationContainer");
+
+
+
+    if (!container) {
+
+        console.error("registrationContainer not found");
+
+        return;
+
+    }
+
+
+
     try {
 
 
-        const response = await fetch(`${API_URL}/my`, {
+        const response = await fetch(
+            `${API_URL}/my`,
+            {
 
-            headers: {
+                method: "GET",
 
-                "Authorization": `Bearer ${token}`
+                headers: {
+
+                    "Authorization": `Bearer ${token}`,
+
+                    "Content-Type": "application/json"
+
+                }
 
             }
+        );
 
-        });
 
 
         const data = await response.json();
 
 
-        const container =
-            document.getElementById("registrationContainer");
+
+        console.log(
+            "My Registrations Response:",
+            data
+        );
+
 
 
         container.innerHTML = "";
 
 
+
         if (!response.ok) {
 
 
-            container.innerHTML =
-                `<h3>${data.message || "Failed to load registrations."}</h3>`;
+            container.innerHTML = `
+
+                <div class="empty-message">
+
+                    <h3>
+                    ${data.message || "Failed to load registrations."}
+                    </h3>
+
+                </div>
+
+            `;
 
 
             return;
@@ -58,108 +97,183 @@ async function loadRegistrations() {
 
 
 
-        if (!data.success ||
+        if (
             !data.registrations ||
-            data.registrations.length === 0) {
+            data.registrations.length === 0
+        ) {
 
 
-            container.innerHTML =
-                "<h3>No registrations found.</h3>";
+            container.innerHTML = `
+
+                <div class="empty-message">
+
+                    <h2>No Registrations Found</h2>
+
+                    <p>
+                    Register for an event to see it here.
+                    </p>
+
+                </div>
+
+            `;
 
 
             return;
 
         }
+
 
 
 
         data.registrations.forEach(registration => {
 
 
+
             const event = registration.event;
 
 
-            const card = document.createElement("div");
+
+            const card =
+                document.createElement("div");
 
 
-            card.className = "event-card";
+
+            card.className =
+                "event-card";
 
 
 
             if (!event) {
 
 
+
                 card.innerHTML = `
 
-                    <h2>Event Deleted</h2>
+                    <h2>
+                    Event Removed
+                    </h2>
 
-                    <p>This event is no longer available.</p>
 
                     <p>
-                        <strong>Status:</strong>
-                        ${registration.status}
+                    This event is no longer available.
+                    </p>
+
+
+                    <p>
+                    <strong>Status:</strong>
+                    ${registration.status}
                     </p>
 
                 `;
+
 
 
             } else {
 
 
+
                 card.innerHTML = `
 
-                    <h2>${event.title}</h2>
 
-                    <p>${event.description}</p>
+                    <h2>
+                    ${event.title}
+                    </h2>
 
-                    <p>
-                        <strong>📅 Date:</strong>
-                        ${new Date(event.date).toDateString()}
-                    </p>
 
                     <p>
-                        <strong>🕒 Time:</strong>
-                        ${event.time}
-                    </p>
-
-                    <p>
-                        <strong>📍 Venue:</strong>
-                        ${event.venue}
-                    </p>
-
-                    <p>
-                        <strong>Status:</strong>
-                        ${registration.status}
+                    ${event.description}
                     </p>
 
 
-                    <button onclick="cancelRegistration('${registration._id}')">
-                        Cancel Registration
-                    </button>
+                    <p>
+                    <strong>📅 Date:</strong>
+                    ${new Date(event.date).toDateString()}
+                    </p>
+
+
+                    <p>
+                    <strong>🕒 Time:</strong>
+                    ${event.time}
+                    </p>
+
+
+                    <p>
+                    <strong>📍 Venue:</strong>
+                    ${event.venue}
+                    </p>
+
+
+                    <p>
+                    <strong>Status:</strong>
+                    ${registration.status}
+                    </p>
+
+
+
+                    ${
+                        registration.status === "Registered"
+                        ?
+
+                        `<button onclick="cancelRegistration('${registration._id}')">
+                            Cancel Registration
+                        </button>`
+
+                        :
+
+                        `<button disabled>
+                            Cancelled
+                        </button>`
+
+                    }
+
 
                 `;
+
 
 
             }
 
 
+
             container.appendChild(card);
+
 
 
         });
 
 
+
     }
 
 
-    catch (error) {
+
+    catch(error) {
 
 
-        console.error("Registration Error:", error);
+
+        console.error(
+            "Load Registrations Error:",
+            error
+        );
 
 
-        document.getElementById("registrationContainer").innerHTML =
-            "<h3>Server Error. Unable to load registrations.</h3>";
+
+        container.innerHTML = `
+
+            <div class="empty-message">
+
+                <h2>
+                Server Error
+                </h2>
+
+                <p>
+                Unable to load registrations.
+                </p>
+
+            </div>
+
+        `;
+
 
     }
 
@@ -175,10 +289,15 @@ async function loadRegistrations() {
 async function cancelRegistration(id) {
 
 
-    const token = localStorage.getItem("token");
+
+    const token =
+        localStorage.getItem("token");
 
 
-    if (!confirm("Are you sure you want to cancel this registration?")) {
+
+    if (!confirm(
+        "Are you sure you want to cancel this registration?"
+    )) {
 
         return;
 
@@ -186,29 +305,38 @@ async function cancelRegistration(id) {
 
 
 
+
     try {
 
 
-        const response = await fetch(`${API_URL}/cancel/${id}`, {
 
+        const response = await fetch(
+            `${API_URL}/cancel/${id}`,
+            {
 
-            method: "PUT",
+                method: "PUT",
 
+                headers: {
 
-            headers: {
+                    "Authorization":
+                    `Bearer ${token}`
 
-
-                "Authorization": `Bearer ${token}`
-
+                }
 
             }
-
-
-        });
+        );
 
 
 
-        const data = await response.json();
+        const data =
+            await response.json();
+
+
+
+        console.log(
+            "Cancel Response:",
+            data
+        );
 
 
 
@@ -216,7 +344,6 @@ async function cancelRegistration(id) {
 
 
             alert(
-                data.message ||
                 "Registration cancelled successfully."
             );
 
@@ -226,6 +353,7 @@ async function cancelRegistration(id) {
 
 
         } else {
+
 
 
             alert(
@@ -241,13 +369,19 @@ async function cancelRegistration(id) {
     }
 
 
-    catch (error) {
+    catch(error) {
 
 
-        console.error("Cancel Error:", error);
+        console.error(
+            "Cancel Error:",
+            error
+        );
 
 
-        alert("Server Error.");
+        alert(
+            "Server Error."
+        );
+
 
     }
 
@@ -260,27 +394,35 @@ async function cancelRegistration(id) {
 // Logout
 // ======================
 
-const logoutBtn = document.getElementById("logoutBtn");
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
 
 
 if (logoutBtn) {
 
 
-    logoutBtn.addEventListener("click", () => {
+    logoutBtn.addEventListener(
+        "click",
+        () => {
 
 
-        localStorage.removeItem("token");
+            localStorage.removeItem("token");
 
-        localStorage.removeItem("user");
-
-
-        alert("Logged Out Successfully!");
+            localStorage.removeItem("user");
 
 
-        window.location.href = "login.html";
+            alert(
+                "Logged Out Successfully!"
+            );
 
 
-    });
+            window.location.href =
+                "login.html";
+
+
+        }
+    );
 
 
 }
