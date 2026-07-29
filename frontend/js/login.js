@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://event-registration-system-1-yze2.onrender.com/api";
 
 document
     .getElementById("loginForm")
@@ -58,7 +58,7 @@ document
 
         } catch (error) {
 
-            console.error(error);
+            console.error("Login Error:", error);
 
             message.innerText = "Unable to connect to the server. Please try again.";
 
