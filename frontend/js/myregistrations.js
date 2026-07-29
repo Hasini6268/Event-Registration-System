@@ -7,7 +7,6 @@ const API_URL = "https://event-registration-system-1-yze2.onrender.com/api/regis
 
 async function loadRegistrations() {
 
-
     const token = localStorage.getItem("token");
 
 
@@ -22,10 +21,7 @@ async function loadRegistrations() {
     }
 
 
-
-    const container =
-        document.getElementById("registrationContainer");
-
+    const container = document.getElementById("registrationContainer");
 
 
     if (!container) {
@@ -37,31 +33,21 @@ async function loadRegistrations() {
     }
 
 
-
     try {
 
 
         const response = await fetch(
             `${API_URL}/my`,
             {
-
                 method: "GET",
-
                 headers: {
-
-                    "Authorization": `Bearer ${token}`,
-
-                    "Content-Type": "application/json"
-
+                    "Authorization": `Bearer ${token}`
                 }
-
             }
         );
 
 
-
         const data = await response.json();
-
 
 
         console.log(
@@ -70,9 +56,7 @@ async function loadRegistrations() {
         );
 
 
-
         container.innerHTML = "";
-
 
 
         if (!response.ok) {
@@ -83,13 +67,12 @@ async function loadRegistrations() {
                 <div class="empty-message">
 
                     <h3>
-                    ${data.message || "Failed to load registrations."}
+                        ${data.message || "Failed to load registrations."}
                     </h3>
 
                 </div>
 
             `;
-
 
             return;
 
@@ -107,16 +90,17 @@ async function loadRegistrations() {
 
                 <div class="empty-message">
 
-                    <h2>No Registrations Found</h2>
+                    <h2>
+                        No Registrations Found
+                    </h2>
 
                     <p>
-                    Register for an event to see it here.
+                        Register for an event to see it here.
                     </p>
 
                 </div>
 
             `;
-
 
             return;
 
@@ -124,112 +108,102 @@ async function loadRegistrations() {
 
 
 
-
         data.registrations.forEach(registration => {
-
 
 
             const event = registration.event;
 
 
-
-            const card =
-                document.createElement("div");
+            const card = document.createElement("div");
 
 
-
-            card.className =
-                "event-card";
+            card.className = "event-card";
 
 
 
             if (!event) {
 
 
-
                 card.innerHTML = `
 
                     <h2>
-                    Event Removed
+                        Event Removed
                     </h2>
 
-
                     <p>
-                    This event is no longer available.
+                        This event is no longer available.
                     </p>
 
-
                     <p>
-                    <strong>Status:</strong>
-                    ${registration.status}
+                        <strong>Status:</strong>
+                        ${registration.status}
                     </p>
 
                 `;
 
 
-
             } else {
-
 
 
                 card.innerHTML = `
 
-
                     <h2>
-                    ${event.title}
+                        ${event.title}
                     </h2>
 
 
                     <p>
-                    ${event.description}
+                        ${event.description}
                     </p>
 
 
                     <p>
-                    <strong>📅 Date:</strong>
-                    ${new Date(event.date).toDateString()}
+                        <strong>📅 Date:</strong>
+                        ${new Date(event.date).toDateString()}
                     </p>
 
 
                     <p>
-                    <strong>🕒 Time:</strong>
-                    ${event.time}
+                        <strong>🕒 Time:</strong>
+                        ${event.time}
                     </p>
 
 
                     <p>
-                    <strong>📍 Venue:</strong>
-                    ${event.venue}
+                        <strong>📍 Venue:</strong>
+                        ${event.venue}
                     </p>
 
 
                     <p>
-                    <strong>Status:</strong>
-                    ${registration.status}
+                        <strong>Status:</strong>
+                        ${registration.status}
                     </p>
 
 
 
                     ${
                         registration.status === "Registered"
+
                         ?
 
-                        `<button onclick="cancelRegistration('${registration._id}')">
+                        `
+                        <button onclick="cancelRegistration('${registration._id}')">
                             Cancel Registration
-                        </button>`
+                        </button>
+                        `
 
                         :
 
-                        `<button disabled>
+                        `
+                        <button disabled>
                             Cancelled
-                        </button>`
+                        </button>
+                        `
 
                     }
 
-
                 `;
-
-
 
             }
 
@@ -238,17 +212,11 @@ async function loadRegistrations() {
             container.appendChild(card);
 
 
-
         });
 
 
 
-    }
-
-
-
-    catch(error) {
-
+    } catch (error) {
 
 
         console.error(
@@ -257,28 +225,26 @@ async function loadRegistrations() {
         );
 
 
-
         container.innerHTML = `
 
             <div class="empty-message">
 
                 <h2>
-                Server Error
+                    Server Error
                 </h2>
 
                 <p>
-                Unable to load registrations.
+                    Unable to load registrations.
                 </p>
 
             </div>
 
         `;
 
-
     }
 
-
 }
+
 
 
 
@@ -289,15 +255,14 @@ async function loadRegistrations() {
 async function cancelRegistration(id) {
 
 
-
-    const token =
-        localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
 
-
-    if (!confirm(
-        "Are you sure you want to cancel this registration?"
-    )) {
+    if (
+        !confirm(
+            "Are you sure you want to cancel this registration?"
+        )
+    ) {
 
         return;
 
@@ -305,9 +270,7 @@ async function cancelRegistration(id) {
 
 
 
-
     try {
-
 
 
         const response = await fetch(
@@ -328,8 +291,7 @@ async function cancelRegistration(id) {
 
 
 
-        const data =
-            await response.json();
+        const data = await response.json();
 
 
 
@@ -340,7 +302,7 @@ async function cancelRegistration(id) {
 
 
 
-        if (response.ok && data.success) {
+        if (response.ok) {
 
 
             alert(
@@ -351,9 +313,7 @@ async function cancelRegistration(id) {
             loadRegistrations();
 
 
-
         } else {
-
 
 
             alert(
@@ -361,15 +321,11 @@ async function cancelRegistration(id) {
                 "Unable to cancel registration."
             );
 
-
         }
 
 
 
-    }
-
-
-    catch(error) {
+    } catch(error) {
 
 
         console.error(
@@ -385,8 +341,9 @@ async function cancelRegistration(id) {
 
     }
 
-
 }
+
+
 
 
 
@@ -429,12 +386,16 @@ if (logoutBtn) {
 
 
 
+
 // ======================
-// Load Page
+// Page Load
 // ======================
 
-window.onload = function () {
+window.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    loadRegistrations();
+        loadRegistrations();
 
-};
+    }
+);
