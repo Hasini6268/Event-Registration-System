@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:5000/api/registrations";
+const API_URL = "https://event-registration-system-1-yze2.onrender.com/api/registrations";
+
 
 // ======================
 // Load My Registrations
@@ -7,6 +8,7 @@ const API_URL = "http://localhost:5000/api/registrations";
 async function loadRegistrations() {
 
     const token = localStorage.getItem("token");
+
 
     if (!token) {
 
@@ -18,7 +20,9 @@ async function loadRegistrations() {
 
     }
 
+
     try {
+
 
         const response = await fetch(`${API_URL}/my`, {
 
@@ -30,37 +34,60 @@ async function loadRegistrations() {
 
         });
 
+
         const data = await response.json();
 
-        const container = document.getElementById("registrationContainer");
+
+        const container =
+            document.getElementById("registrationContainer");
+
 
         container.innerHTML = "";
 
+
         if (!response.ok) {
 
-            container.innerHTML = `<h3>${data.message || "Failed to load registrations."}</h3>`;
+
+            container.innerHTML =
+                `<h3>${data.message || "Failed to load registrations."}</h3>`;
+
 
             return;
 
         }
 
-        if (!data.success || !data.registrations || data.registrations.length === 0) {
 
-            container.innerHTML = "<h3>No registrations found.</h3>";
+
+        if (!data.success ||
+            !data.registrations ||
+            data.registrations.length === 0) {
+
+
+            container.innerHTML =
+                "<h3>No registrations found.</h3>";
+
 
             return;
 
         }
+
+
 
         data.registrations.forEach(registration => {
 
+
             const event = registration.event;
+
 
             const card = document.createElement("div");
 
+
             card.className = "event-card";
 
+
+
             if (!event) {
+
 
                 card.innerHTML = `
 
@@ -68,11 +95,16 @@ async function loadRegistrations() {
 
                     <p>This event is no longer available.</p>
 
-                    <p><strong>Status:</strong> ${registration.status}</p>
+                    <p>
+                        <strong>Status:</strong>
+                        ${registration.status}
+                    </p>
 
                 `;
 
+
             } else {
+
 
                 card.innerHTML = `
 
@@ -80,13 +112,26 @@ async function loadRegistrations() {
 
                     <p>${event.description}</p>
 
-                    <p><strong>Date:</strong> ${new Date(event.date).toDateString()}</p>
+                    <p>
+                        <strong>📅 Date:</strong>
+                        ${new Date(event.date).toDateString()}
+                    </p>
 
-                    <p><strong>Time:</strong> ${event.time}</p>
+                    <p>
+                        <strong>🕒 Time:</strong>
+                        ${event.time}
+                    </p>
 
-                    <p><strong>Venue:</strong> ${event.venue}</p>
+                    <p>
+                        <strong>📍 Venue:</strong>
+                        ${event.venue}
+                    </p>
 
-                    <p><strong>Status:</strong> ${registration.status}</p>
+                    <p>
+                        <strong>Status:</strong>
+                        ${registration.status}
+                    </p>
+
 
                     <button onclick="cancelRegistration('${registration._id}')">
                         Cancel Registration
@@ -94,24 +139,34 @@ async function loadRegistrations() {
 
                 `;
 
+
             }
+
 
             container.appendChild(card);
 
+
         });
+
 
     }
 
+
     catch (error) {
 
-        console.error(error);
+
+        console.error("Registration Error:", error);
+
 
         document.getElementById("registrationContainer").innerHTML =
             "<h3>Server Error. Unable to load registrations.</h3>";
 
     }
 
+
 }
+
+
 
 // ======================
 // Cancel Registration
@@ -119,7 +174,9 @@ async function loadRegistrations() {
 
 async function cancelRegistration(id) {
 
+
     const token = localStorage.getItem("token");
+
 
     if (!confirm("Are you sure you want to cancel this registration?")) {
 
@@ -127,45 +184,77 @@ async function cancelRegistration(id) {
 
     }
 
+
+
     try {
+
 
         const response = await fetch(`${API_URL}/cancel/${id}`, {
 
+
             method: "PUT",
+
 
             headers: {
 
+
                 "Authorization": `Bearer ${token}`
+
 
             }
 
+
         });
+
+
 
         const data = await response.json();
 
+
+
         if (response.ok && data.success) {
 
-            alert(data.message || "Registration cancelled successfully.");
+
+            alert(
+                data.message ||
+                "Registration cancelled successfully."
+            );
+
 
             loadRegistrations();
 
+
+
         } else {
 
-            alert(data.message || "Unable to cancel registration.");
+
+            alert(
+                data.message ||
+                "Unable to cancel registration."
+            );
+
 
         }
 
+
+
     }
+
 
     catch (error) {
 
-        console.error(error);
+
+        console.error("Cancel Error:", error);
+
 
         alert("Server Error.");
 
     }
 
+
 }
+
+
 
 // ======================
 // Logout
@@ -173,20 +262,30 @@ async function cancelRegistration(id) {
 
 const logoutBtn = document.getElementById("logoutBtn");
 
+
 if (logoutBtn) {
+
 
     logoutBtn.addEventListener("click", () => {
 
+
         localStorage.removeItem("token");
+
         localStorage.removeItem("user");
+
 
         alert("Logged Out Successfully!");
 
+
         window.location.href = "login.html";
+
 
     });
 
+
 }
+
+
 
 // ======================
 // Load Page

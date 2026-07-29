@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:5000/api/events";
+const API_URL = "https://event-registration-system-1-yze2.onrender.com/api";
+
 
 // ======================
 // Load All Events
@@ -8,18 +9,24 @@ async function loadEvents() {
 
     try {
 
-        const response = await fetch(API_URL);
+        const response = await fetch(`${API_URL}/events`);
         const data = await response.json();
 
         const container = document.getElementById("eventsContainer");
         container.innerHTML = "";
 
+
         if (!response.ok) {
 
-            container.innerHTML = `<h3>${data.message || "Failed to load events."}</h3>`;
+            container.innerHTML = `
+                <div class="empty-message">
+                    <h2>${data.message || "Failed to load events."}</h2>
+                </div>
+            `;
             return;
 
         }
+
 
         if (!data.events || data.events.length === 0) {
 
@@ -33,16 +40,22 @@ async function loadEvents() {
 
         }
 
+
         data.events.forEach(event => {
+
 
             const availableSeats =
                 event.maxParticipants - (event.registeredParticipants || 0);
 
+
             const badgeColor =
                 availableSeats > 0 ? "#16a34a" : "#dc2626";
 
+
             const card = document.createElement("div");
+
             card.className = "event-card";
+
 
             card.innerHTML = `
 
@@ -59,6 +72,7 @@ async function loadEvents() {
                 ">
                     🎉
                 </div>
+
 
                 <div style="
                     display:flex;
@@ -78,6 +92,7 @@ async function loadEvents() {
                         ${event.category || "General"}
                     </span>
 
+
                     <span style="
                         background:${badgeColor};
                         color:white;
@@ -90,13 +105,17 @@ async function loadEvents() {
 
                 </div>
 
+
                 <h2>${event.title}</h2>
 
-                <p style="margin-bottom:15px;">
+
+                <p>
                     ${event.description}
                 </p>
 
-                <hr style="margin:15px 0;">
+
+                <hr>
+
 
                 <p><strong>📅 Date:</strong> ${new Date(event.date).toDateString()}</p>
 
@@ -104,9 +123,16 @@ async function loadEvents() {
 
                 <p><strong>📍 Venue:</strong> ${event.venue}</p>
 
-                <p><strong>👥 Seats:</strong> ${event.registeredParticipants || 0} / ${event.maxParticipants}</p>
+                <p>
+                    <strong>👥 Seats:</strong>
+                    ${event.registeredParticipants || 0}/${event.maxParticipants}
+                </p>
 
-                <p><strong>✅ Available:</strong> ${availableSeats}</p>
+                <p>
+                    <strong>✅ Available:</strong>
+                    ${availableSeats}
+                </p>
+
 
                 <button
                     onclick="registerEvent('${event._id}')"
@@ -117,26 +143,38 @@ async function loadEvents() {
 
             `;
 
+
             container.appendChild(card);
+
 
         });
 
+
     }
+
 
     catch (error) {
 
-        console.error(error);
+        console.error("Events Error:", error);
+
 
         document.getElementById("eventsContainer").innerHTML = `
+
             <div class="empty-message">
+
                 <h2>Server Error</h2>
+
                 <p>Unable to load events.</p>
+
             </div>
+
         `;
 
     }
 
 }
+
+
 
 // ======================
 // Register Event
@@ -144,30 +182,39 @@ async function loadEvents() {
 
 async function registerEvent(eventId) {
 
+
     const token = localStorage.getItem("token");
+
 
     if (!token) {
 
         alert("Please login first.");
+
         window.location.href = "login.html";
+
         return;
 
     }
 
+
     try {
 
+
         const response = await fetch(
-            "http://localhost:5000/api/registrations/register",
+            `${API_URL}/registrations/register`,
             {
 
                 method: "POST",
 
+
                 headers: {
 
                     "Content-Type": "application/json",
+
                     "Authorization": `Bearer ${token}`
 
                 },
+
 
                 body: JSON.stringify({
 
@@ -179,31 +226,44 @@ async function registerEvent(eventId) {
 
         );
 
+
         const data = await response.json();
+
 
         if (response.ok && data.success) {
 
+
             alert("🎉 Event Registered Successfully!");
+
 
             loadEvents();
 
+
         } else {
+
 
             alert(data.message || "Registration failed.");
 
         }
 
+
     }
+
 
     catch (error) {
 
-        console.error(error);
+
+        console.error("Registration Error:", error);
+
 
         alert("Server Error.");
 
     }
 
+
 }
+
+
 
 // ======================
 // Logout
@@ -211,23 +271,33 @@ async function registerEvent(eventId) {
 
 const logoutBtn = document.getElementById("logoutBtn");
 
+
 if (logoutBtn) {
+
 
     logoutBtn.addEventListener("click", () => {
 
+
         localStorage.removeItem("token");
+
         localStorage.removeItem("user");
+
 
         alert("Logged Out Successfully!");
 
+
         window.location.href = "login.html";
+
 
     });
 
+
 }
 
+
+
 // ======================
-// Load Events
+// Load Events On Page Open
 // ======================
 
 window.onload = function () {
