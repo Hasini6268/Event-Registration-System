@@ -1,0 +1,54 @@
+# Query: http://localhost:5000
+# ContextLines: 1
+
+13 results - 7 files
+
+frontend\admin\admin-dashboard.js:
+   44  
+   45:         const response = await fetch("https://event-registration-system-nudb.onrender.com/api/events", {
+   46              method: "POST",
+
+   98  
+   99:        const response = await fetch("https://event-registration-system-nudb.onrender.com/api/events", {
+  100              headers: {
+
+  192          const response = await fetch(
+  193:             `https://event-registration-system-nudb.onrender.com/api/events/${id}`,
+  194              {
+
+  249          const response = await fetch(
+  250:             `https://event-registration-system-nudb.onrender.com/api/events/${id}`,
+  251              {
+
+  290          const response = await fetch(
+  291:             "https://event-registration-system-nudb.onrender.com/api/registrations",
+  292              {
+
+frontend\admin\admin-login.js:
+  27             const response = await fetch("https://event-registration-system-nudb.onrender.com/api/auth/login",
+    {
+frontend\js\dashboard.js:
+  41          const eventsResponse = await fetch(
+  42:             "https://event-registration-system-nudb.onrender.com/api/events"
+  43          );
+
+  52          const registrationResponse = await fetch(
+  53:            "https://event-registration-system-nudb.onrender.com/api/registrations/my"
+  54              {
+
+frontend\js\events.js:
+    1: const API_URL = "https://event-registration-system-nudb.onrender.com/api/events";
+    2  
+
+  159          const response = await fetch("https://event-registration-system-nudb.onrender.com/api/registrations/register",
+
+frontend\js\login.js:
+  1: const API_URL = "https://event-registration-system-nudb.onrender.com/api";
+  2  
+
+frontend\js\myregistrations.js:
+  1:const API_URL = "https://event-registration-system-nudb.onrender.com/api/registrations";
+
+frontend\js\register.js:
+  1: const API_URL = "https://event-registration-system-nudb.onrender.com/api";
+  2  
