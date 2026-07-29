@@ -1,16 +1,23 @@
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://event-registration-system-1-yze2.onrender.com/api";
 
-document
-.getElementById("registerForm")
-.addEventListener("submit", async (e) => {
+const registerForm = document.getElementById("registerForm");
+const message = document.getElementById("message");
 
+registerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const fullName = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const fullName = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!fullName || !email || !password) {
+        message.innerText = "Please fill all fields";
+        return;
+    }
 
     try {
+
+        message.innerText = "Registering...";
 
         const response = await fetch(`${API_URL}/auth/register`, {
 
@@ -28,9 +35,13 @@ document
 
         });
 
+
         const data = await response.json();
 
-        if (data.success) {
+        console.log("Register Response:", data);
+
+
+        if (response.ok && data.success) {
 
             alert("Registration Successful!");
 
@@ -38,13 +49,17 @@ document
 
         } else {
 
-            document.getElementById("message").innerText = data.message;
+            message.innerText = data.message || "Registration failed";
 
         }
 
+
     } catch (error) {
 
-        document.getElementById("message").innerText = "Server Error";
+        console.error("Register Error:", error);
+
+        message.innerText =
+            "Cannot connect to server. Please try again later.";
 
     }
 
